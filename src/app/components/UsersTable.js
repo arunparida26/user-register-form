@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -8,10 +9,12 @@ import {
   TableRow,
   Paper,
   Typography,
-  Box,
 } from "@mui/material";
+import { selectAllUsers } from "../../store/userSlice";
 
-const UsersTable = ({ users }) => {
+const UsersTable = () => {
+  const users = useSelector(selectAllUsers);
+
   if (users.length === 0) {
     return (
       <Paper elevation={3} sx={{ p: 3 }}>

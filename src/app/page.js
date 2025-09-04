@@ -96,10 +96,11 @@
 
 "use client";
 
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Container, Box } from "@mui/material";
 import DynamicForm from "./components/DynamicForm";
 import UsersTable from "./components/UsersTable";
+import { addUser } from "../store/userSlice";
 
 // JSON Configuration
 const formConfig = {
@@ -151,7 +152,7 @@ const formConfig = {
 };
 
 export default function Home() {
-  const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (formData) => {
     const user = {
@@ -161,14 +162,15 @@ export default function Home() {
       dob: formData.dob,
     };
 
-    setUsers((prev) => [...prev, user]);
+    // Dispatch action to add user to Redux store
+    dispatch(addUser(user));
   };
 
   return (
     <Container maxWidth="md">
       <Box sx={{ py: 4 }}>
         <DynamicForm formConfig={formConfig} onSubmit={handleFormSubmit} />
-        <UsersTable users={users} />
+        <UsersTable />
       </Box>
     </Container>
   );
